@@ -1,0 +1,65 @@
+{
+    "categories": [
+      {
+        "name": "Anime",
+        "items": [
+          {
+            "id": 1.1,
+            "name": "Naruto",
+            "picture": "/images/Anime/1.jpg"
+          },
+          {
+            "id": 1.2,
+            "name": "One Piece",
+            "picture": "/images/Anime/1.jpg"
+          },
+          {
+            "id": 1.3,
+            "name": "Dragon Ball Z",
+            "picture": "/images/Anime/1.jpg"
+          }
+        ]
+      },
+      {
+        "name": "Characters",
+        "items": [
+          {
+            "id": 2.1,
+            "name": "Naruto Uzumaki",
+            "picture": "/images/Anime/1.jpg"
+          },
+          {
+            "id": 2.2,
+            "name": "Monkey D. Luffy",
+            "picture": "/images/Anime/1.jpg"
+          },
+          {
+            "id": 2.3,
+            "name": "Goku",
+            "picture": "/images/Anime/1.jpg"
+          }
+        ]
+      },
+      {
+        "name": "VA",
+        "items": [
+          {
+            "id": 3.1,
+            "name": "Junko Takeuchi",
+            "picture": "/images/Anime/1.jpg"
+          },
+          {
+            "id": 3.2,
+            "name": "Mayumi Tanaka",
+            "picture": "/images/Anime/1.jpg"
+          },
+          {
+            "id": 3.3,
+            "name": "Masako Nozawa",
+            "picture": "/images/Anime/1.jpg"
+          }
+        ]
+      }
+    ]
+  }
+  

@@ -1,101 +1,63 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const mainTab = document.querySelector('.selected');
-    const tabs = document.querySelectorAll('nav ul li');
-    const contentSections = document.querySelectorAll('.content-section');
-    const logo = document.querySelector('.logo');
-    const parallaxContainer = document.querySelector('.parallax-container');
-    const parallaxElements = document.querySelectorAll('.parallax-image, .parallax-title');
+document.addEventListener("DOMContentLoaded", function () {
+  const objectHolder = document.querySelector(".object-holder");
+  const rankingList = document.querySelector(".ranking ol");
+  const saveButton = document.getElementById("save-button");
+  const maxRankingItems = 10; // Maximum number of items in the ranking list
 
-// 2. Loop over tabs to add click event listener
-tabs.forEach(function(tab) {
-  tab.addEventListener('click', function() {
-    // 3. Get id of clicked tab
-    const tabId = tab.id;
+  // Mock data (replace with your JSON data)
+  const animeData = [
+    { id: 1, name: "Anime 1" },
+    { id: 2, name: "Anime 2" },
+    { id: 3, name: "Anime 3" },
+    // Add more data
+  ];
 
-    // 4. Show content section with same id as clicked tab
-    showContentSection(tabId);
-  });
-});
+  // Initialize the ranking list
+  for (let i = 1; i <= maxRankingItems; i++) {
+    const rankingItem = document.createElement("li");
+    rankingItem.className = "ranking-item";
+    rankingItem.textContent = i;
+    rankingList.appendChild(rankingItem);
+  }
 
-// Get references to the button and the dropdown menu
-const button = document.getElementById('dropdown-button');
-const menu = document.getElementById('dropdown-menu');
+  // Create draggable objects from data
+  animeData.forEach((anime) => {
+    const animeObject = document.createElement("div");
+    animeObject.className = "draggable";
+    animeObject.textContent = anime.name;
+    animeObject.setAttribute("draggable", true);
 
-// Toggle the visibility of the dropdown menu when the button is clicked
-button.addEventListener('click', () => {
-    menu.classList.toggle('hidden');
-});
-
-// Close the dropdown menu if the user clicks outside of it
-document.addEventListener('click', (event) => {
-    if (!menu.contains(event.target) && event.target !== button) {
-        menu.classList.add('hidden');
-    }
-});
-
-
-// 5. Define function to show content section
-function showContentSection(sectionId) {
-  // 6. Loop over content sections
-  contentSections.forEach(function(section) {
-    // 7. If section id is same as clicked tab id
-    if (section.id === sectionId) {
-      // 8. Remove "hidden-tab" class
-      section.classList.remove('hidden-tab');
-    } else {
-      // 9. Add "hidden-tab" class
-      section.classList.add('hidden-tab');
-    }
-  });
-}
-    
-  
-    function selectTab(tabElement) {
-      tabs.forEach(function(tab) {
-        tab.classList.remove('selected');
-      });
-      tabElement.classList.add('selected');
-    }
-  
-    function switchToMainTab() {
-      showContentSection('main-content');
-      selectTab(mainTab);
-    }
-  
-    mainTab.addEventListener('click', switchToMainTab);
-  
-    tabs.forEach(function(tab) {
-      tab.addEventListener('click', function() {
-        const sectionId = tab.id + '-content';
-        showContentSection(sectionId);
-        selectTab(tab);
-      });
+    animeObject.addEventListener("dragstart", (e) => {
+      e.dataTransfer.setData("text/plain", e.target.textContent);
     });
-  
-    logo.addEventListener('click', switchToMainTab);
-  
-    function parallaxScroll() {
-      const scrollPosition = window.pageYOffset;
-    
-      parallaxElements.forEach(function(element) {
-        const speed = parseFloat(element.getAttribute('data-speed'));
-        const translateY = -scrollPosition * speed;
-    
-        element.style.transform = 'translateY(' + translateY + 'px)';
-      });
-    
-      const textColumns = document.querySelectorAll('.text-column');
-      textColumns.forEach(function(column) {
-        const speed = parseFloat(column.getAttribute('data-speed'));
-        const translateY = -scrollPosition * speed;
-    
-        column.style.transform = 'translateY(' + translateY + 'px)';
-      });
-    
-      const gifContainer = document.querySelector('.gif-container');
-      const gifSpeed = parseFloat(gifContainer.getAttribute('data-speed'));
-      const translateY = -scrollPosition * gifSpeed;
-      gifContainer.style.transform = 'translateY(' + translateY + 'px)';
-    }  
-    window.addEventListener('scroll', parallaxScroll);
+
+    objectHolder.appendChild(animeObject);
   });
+
+  // Handle drag-and-drop functionality
+  rankingList.addEventListener("dragover", (e) => {
+    e.preventDefault();
+  });
+
+  rankingList.addEventListener("drop", (e) => {
+    e.preventDefault();
+    const data = e.dataTransfer.getData("text/plain");
+    const rankingItem = e.target;
+
+    if (!rankingItem.classList.contains("dragged")) {
+      rankingItem.textContent = data;
+      rankingItem.classList.add("dragged");
+    }
+  });
+
+  // Handle saving the ranking
+  saveButton.addEventListener("click", () => {
+    const rankedItems = Array.from(rankingList.children)
+      .filter((item) => item.classList.contains("dragged"))
+      .map((item) => item.textContent);
+
+    // Send the rankedItems data to your server or perform other actions here
+    console.log("Ranked Items:", rankedItems);
+    alert("Ranking saved!");
+  });
+});
