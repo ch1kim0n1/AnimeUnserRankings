@@ -6,15 +6,16 @@ body, ul {
 
 /* Basic styling */
 body {
-  background-color: black;
-  color: yellow;
+  background-color: #F7D9AA;
+  color: #000;
   font-family: Arial, sans-serif;
 }
 
 header {
-  background-color: yellow;
+  background-color: #F7D9AA;
   text-align: center;
-  padding: 10px 0;
+  padding: 20px;
+  border-bottom: 5px solid #FFC107;
 }
 
 nav ul {
@@ -22,8 +23,14 @@ nav ul {
 }
 
 nav li {
-  display: inline;
-  margin-right: 20px;
+  display: inline-block;
+  margin-right: 30px;
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #FFC107;
+  text-shadow: 2px 2px #000;
 }
 
 main {
@@ -41,16 +48,20 @@ main {
 
 .object-holder {
   flex: 1;
-  background-color: white;
+  background-color: #FFF;
   padding: 20px;
-  border: 2px solid yellow;
+  border: 5px solid #FFC107;
+  border-radius: 20px;
+  box-shadow: 5px 5px #000;
 }
 
 .ranking {
   flex: 3;
-  background-color: grey;
+  background-color: #FFC107;
   padding: 20px;
-  border: 2px solid yellow;
+  border: 5px solid #000;
+  border-radius: 20px;
+  box-shadow: 5px 5px #000;
 }
 
 ol {
@@ -64,33 +75,45 @@ footer {
 }
 
 #save-button {
-  background-color: yellow;
-  color: black;
+  background-color: #FFC107;
+  color: #000;
   padding: 10px 20px;
   border: none;
   cursor: pointer;
+  border-radius: 20px;
+  box-shadow: 2px 2px #000;
 }
 
-/* Styling for draggable objects */
 .draggable {
-  cursor: pointer;
-  user-drag: none;
-  touch-action: none;
-  -webkit-user-drag: none;
-  -webkit-touch-action: none;
+  display: inline-block;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  cursor: move;
+}
+
+.draggable img {
+  display: block;
+  max-width: 100%;
+  height: auto;
 }
 
 /* Styling for ranking list items */
 li.ranking-item {
   padding: 10px;
   margin: 5px;
-  background-color: white;
-  border: 2px solid yellow;
+  background-color: #FFF;
+  border: 5px solid #FFC107;
+  border-radius: 20px;
   cursor: pointer;
+  box-shadow: 2px 2px #000;
 }
 
 /* Styling for objects in the ranking list */
 li.ranking-item.dragged {
-  background-color: grey;
-  border-color: black;
+  background-color: #FFC107;
+  border-color: #000;
 }

@@ -4,11 +4,14 @@ document.addEventListener("DOMContentLoaded", function () {
   const saveButton = document.getElementById("save-button");
   const maxRankingItems = 10; // Maximum number of items in the ranking list
 
+  console.log("objectHolder:", objectHolder);
+  console.log("rankingList:", rankingList);
+
   // Mock data (replace with your JSON data)
   const animeData = [
-    { id: 1, name: "Anime 1" },
-    { id: 2, name: "Anime 2" },
-    { id: 3, name: "Anime 3" },
+    { id: 1, name: "Anime 1", image: "images/Anime/1.jpg" },
+    { id: 2, name: "Anime 2", image: "images/Anime/1.jpg" },
+    { id: 3, name: "Anime 3", image: "images/Anime/1.jpg" },
     // Add more data
   ];
 
@@ -24,14 +27,27 @@ document.addEventListener("DOMContentLoaded", function () {
   animeData.forEach((anime) => {
     const animeObject = document.createElement("div");
     animeObject.className = "draggable";
-    animeObject.textContent = anime.name;
+    const animeImage = document.createElement("img");
+    animeImage.src = anime.image;
+    animeObject.appendChild(animeImage);
     animeObject.setAttribute("draggable", true);
 
+    console.log("animeObject:", animeObject);
+
     animeObject.addEventListener("dragstart", (e) => {
-      e.dataTransfer.setData("text/plain", e.target.textContent);
+      e.dataTransfer.setData("text/plain", anime.id);
+      e.target.classList.add("dragging");
     });
 
-    objectHolder.appendChild(animeObject);
+    animeObject.addEventListener("dragend", (e) => {
+      e.target.classList.remove("dragging");
+    });
+
+    if (objectHolder) {
+      objectHolder.appendChild(animeObject);
+    } else {
+      console.error("Object holder not found");
+    }
   });
 
   // Handle drag-and-drop functionality
@@ -45,7 +61,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const rankingItem = e.target;
 
     if (!rankingItem.classList.contains("dragged")) {
-      rankingItem.textContent = data;
+      const animeObject = document.querySelector(`[data-anime-id="${data}"]`);
+      rankingItem.appendChild(animeObject);
       rankingItem.classList.add("dragged");
     }
   });
@@ -54,10 +71,19 @@ document.addEventListener("DOMContentLoaded", function () {
   saveButton.addEventListener("click", () => {
     const rankedItems = Array.from(rankingList.children)
       .filter((item) => item.classList.contains("dragged"))
-      .map((item) => item.textContent);
+      .map((item) => item.dataset.animeId);
 
     // Send the rankedItems data to your server or perform other actions here
     console.log("Ranked Items:", rankedItems);
     alert("Ranking saved!");
+
+    // Convert the ranking list to an image and save as JPG
+    html2canvas(rankingList).then((canvas) => {
+      const imgData = canvas.toDataURL("image/jpeg");
+      const link = document.createElement("a");
+      link.download = "ranking.jpg";
+      link.href = imgData;
+      link.click();
+    });
   });
 });
